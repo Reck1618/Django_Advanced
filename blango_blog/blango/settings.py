@@ -32,6 +32,7 @@ class Dev(Configuration):
 
     ALLOWED_HOSTS = ["*"]
 
+    AUTH_USER_MODEL = "blango_auth.User"
 
     # Application definition
 
@@ -44,9 +45,11 @@ class Dev(Configuration):
         'django.contrib.staticfiles',
         'crispy_forms',
         'crispy_bootstrap5',
+        'blango_auth',
         'blog',
-        'debug_toolbar'
+        'debug_toolbar',
     ]
+
 
     MIDDLEWARE = [
         'debug_toolbar.middleware.DebugToolbarMiddleware',
