@@ -15,7 +15,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-import blog.views
+import blog.views, blango_auth.views
 from django.conf import settings
 
 urlpatterns = [
@@ -23,6 +23,8 @@ urlpatterns = [
     path('', blog.views.index, name="index"),
     path('post/<slug:slug>/', blog.views.post_detail, name="blog-post-detail"),
     path('ip/', blog.views.get_ip, name="get-ip"),
+    path('accounts/', include('django.contrib.auth.urls')),
+    path('accounts/profile/', blango_auth.views.profile, name="profile"),
 ]
 
 if settings.DEBUG:
