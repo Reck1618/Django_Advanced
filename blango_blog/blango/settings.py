@@ -38,6 +38,12 @@ class Dev(Configuration):
     ACCOUNT_ACTIVATION_DAYS = 7
     REGISTRATION_OPEN = True
 
+    SITE_ID = 1
+    ACCOUNT_USER_MODEL_USERNAME_FIELD = None
+    ACCOUNT_EMAIL_REQUIRED = True
+    ACCOUNT_USERNAME_REQUIRED = False
+    ACCOUNT_AUTHENTICATION_METHOD = "email"
+
     # Application definition
     INSTALLED_APPS = [
         'django.contrib.admin',
@@ -51,10 +57,15 @@ class Dev(Configuration):
         'blango_auth',
         'blog',
         'debug_toolbar',
+        'allauth',
+        'allauth.account',
+        'allauth.socialaccount',
+        'allauth.socialaccount.providers.google',
     ]
 
 
     MIDDLEWARE = [
+        'allauth.account.middleware.AccountMiddleware',
         'debug_toolbar.middleware.DebugToolbarMiddleware',
         'django.middleware.security.SecurityMiddleware',
         'django.contrib.sessions.middleware.SessionMiddleware',

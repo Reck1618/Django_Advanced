@@ -4,7 +4,8 @@
 {% for comment in post.comment.all %}
 <div class="row border-top pt-2">
     <div class="col">
-        <h5> Posted by {{ comment.creator }} at {{ comment.created_at|date:"M, d Y h:i" }}</h5>
+        <!-- <h5> Posted by {{ comment.creator }} at {{ comment.created_at|date:"M, d Y h:i" }}</h5> -->
+        <h5> Posted by {{ comment.creator.socialaccount_set.all.0.extra_data.name }} at {{ comment.created_at|date:"M, d Y h:i" }}</h5>
     </div>
 </div>
 
