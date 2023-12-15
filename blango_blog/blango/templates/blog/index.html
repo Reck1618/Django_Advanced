@@ -5,6 +5,11 @@
     <div class="row border-bottom">
         <div class="col">
             <h3>{{ post.title }}</h3>
+            {% if post.hero_image %}
+            <!-- Thumbnail not working, using normal crop instead -->
+            <img src="{{ post.hero_image.url }}"  alt="Thumbnail Image" height="100" width="100">
+            {% endif %}
+
             {% include "blog/post-byline.html" %}
             <p>{{ post.summary }}</p>
             <p>
