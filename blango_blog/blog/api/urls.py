@@ -5,6 +5,7 @@ from rest_framework.authtoken import views
 from drf_yasg.views import get_schema_view
 from drf_yasg import openapi
 from rest_framework.routers import DefaultRouter
+from rest_framework_simplejwt.views import TokenRefreshView, TokenObtainPairView
 import os
 
 router = DefaultRouter()
@@ -23,6 +24,8 @@ schema_view = get_schema_view(
 
 urlpatterns = [
     path("users/<str:email>", UserDetail.as_view(), name="api_user_details"),
+    path("jwt/", TokenObtainPairView.as_view(), name="jwt_obtain_pair"),
+    path("jwt/refresh/", TokenRefreshView.as_view(), name="jwt_refresh"),
 ]
 
 urlpatterns = format_suffix_patterns(urlpatterns)
