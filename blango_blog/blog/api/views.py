@@ -18,11 +18,15 @@ from django.views.decorators.cache import cache_page
 from django.views.decorators.vary import vary_on_headers, vary_on_cookie
 
 from rest_framework.exceptions import PermissionDenied
+from blog.api.filters import PostFilterSet
 
 class PostViewSet(viewsets.ModelViewSet):
     permission_classes = [IsAuthorModifyOrReadOnly | IsAdminUserForObject]
     queryset = Post.objects.all()
+    filterset_class = PostFilterSet
+    ordering_fields = ["published_at", "author", "title", "slug", ""]
 
+    
     def get_queryset(self):
         if self.request.user.is_anonymous:
             queryset = self.queryset.filter(published_at__lte=timezone.now())
