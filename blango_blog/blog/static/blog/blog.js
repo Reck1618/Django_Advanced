@@ -25,24 +25,31 @@ class PostRow extends React.Component {
 
 class PostTable extends React.Component {
   state = {
-    dataLoaded: true,
-    data: {
-      results: [
-        {
-          id: 15,
-          tags: [
-            'django', 'react'
-          ],
-          'hero_image': {
-            'thumbnail': '/media/__sized__/hero_images/wallpaperflare.com_wallpaper_4-crop-c0-5__0-5-200x200-70.jpg',
-            'full_size': '/media/hero_images/wallpaperflare.com_wallpaper_4.jpg'
-          },
-          title: 'Test Post',
-          slug: 'test-post',
-          summary: 'A test post, created for Django/React.'
+    dataLoaded: false,
+    data: null
+  }
+
+  componentDidMount () {
+    fetch('/api/v1/posts/').then(response => {
+      if (response.status !== 200) {
+        throw new Error('Invalid status from server: ' + response.statusText)
+      }
+
+      return response.json()
+    }).then(data => {
+      this.setState({
+        dataLoaded: true,
+        data: data
+      })
+    }).catch(e => {
+      console.error(e)
+      this.setState({
+        dataLoaded: true,
+        data: {
+          results: []
         }
-      ]
-    }
+      })
+    })
   }
 
   render () {
@@ -81,6 +88,23 @@ class PostTable extends React.Component {
 
 const domContainer = document.getElementById('react_root')
 ReactDOM.render(
-  React.createElement(PostTable),
+  React.createElement(
+    PostTable,
+    {url: postListUrl}
+  ),
   domContainer
 )
+
+// fetch
+fetch(this.props.url).then(response => {
+  if (response.status !== 200) {
+    throw new Error('Invalid status from server: ' + response.statusText)
+  }
+
+  return response.json()
+}).then(data => {
+  // do something with data, for example
+  console.log(data)
+}).catch(e => {
+  console.error(e)
+})
